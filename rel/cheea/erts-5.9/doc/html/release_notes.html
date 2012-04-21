@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:fn="http://www.w3.org/2005/02/xpath-functions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../doc/otp_doc.css" type="text/css">
+<title>Erlang -- </title>
+</head>
+<body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000"><div id="container">
+<script id="js" type="text/javascript" language="JavaScript" src="../../../doc/js/flipmenu/flipmenu.js"></script><script id="js2" type="text/javascript" src="../../../doc/js/erlresolvelinks.js"></script><script language="JavaScript" type="text/javascript">
+            <!--
+              function getWinHeight() {
+                var myHeight = 0;
+                if( typeof( window.innerHeight ) == 'number' ) {
+                  //Non-IE
+                  myHeight = window.innerHeight;
+                } else if( document.documentElement && ( document.documentElement.clientWidth ||
+                                                         document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myHeight = document.documentElement.clientHeight;
+                } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myHeight = document.body.clientHeight;
+                }
+                return myHeight;
+              }
+
+              function setscrollpos() {
+                var objf=document.getElementById('loadscrollpos');
+                 document.getElementById("leftnav").scrollTop = objf.offsetTop - getWinHeight()/2;
+              }
+
+              function addEvent(obj, evType, fn){
+                if (obj.addEventListener){
+                obj.addEventListener(evType, fn, true);
+                return true;
+              } else if (obj.attachEvent){
+                var r = obj.attachEvent("on"+evType, fn);
+                return r;
+              } else {
+                return false;
+              }
+             }
+
+             addEvent(window, 'load', setscrollpos);
+
+             //--></script><div id="leftnav"><div class="innertube">
+<img alt="Erlang logo" src="../../../doc/erlang-logo.png"><br><small><a href="users_guide.html">User's Guide</a><br><a href="index.html">Reference Manual</a><br><a href="release_notes.html">Release Notes</a><br><a href="../pdf/erts-5.9.pdf">PDF</a><br><a href="../../../doc/index.html">Top</a></small><p><strong>Erlang Run-Time System Application (ERTS)</strong><br><strong>Release Notes</strong><br><small>Version 5.9</small></p>
+<br><a href="javascript:openAllFlips()">Expand All</a><br><a href="javascript:closeAllFlips()">Contract All</a><p><small><strong>Chapters</strong></small></p>
+<ul class="flipMenu" imagepath="../../../doc/js/flipmenu"><li id="no" title="ERTS Release Notes" expanded="false">ERTS Release Notes<ul>
+<li><a href="notes.html">
+              Top of chapter
+            </a></li>
+<li title="Erts 5.9"><a href="notes.html#id59560">Erts 5.9</a></li>
+<li title="Erts 5.8.5"><a href="notes.html#id67296">Erts 5.8.5</a></li>
+<li title="Erts 5.8.4"><a href="notes.html#id65167">Erts 5.8.4</a></li>
+<li title="Erts 5.8.3.2"><a href="notes.html#id127268">Erts 5.8.3.2</a></li>
+<li title="Erts 5.8.3.1"><a href="notes.html#id127305">Erts 5.8.3.1</a></li>
+<li title="Erts 5.8.3"><a href="notes.html#id127366">Erts 5.8.3</a></li>
+<li title="Erts 5.8.2"><a href="notes.html#id127781">Erts 5.8.2</a></li>
+<li title="Erts 5.8.1.2"><a href="notes.html#id128266">Erts 5.8.1.2</a></li>
+<li title="Erts 5.8.1.1"><a href="notes.html#id128336">Erts 5.8.1.1</a></li>
+<li title="Erts 5.8.1"><a href="notes.html#id128368">Erts 5.8.1</a></li>
+<li title="Erts 5.8"><a href="notes.html#id129226">Erts 5.8</a></li>
+<li title="Erts 5.7.5.2"><a href="notes.html#id130234">Erts 5.7.5.2</a></li>
+<li title="Erts 5.7.5.1"><a href="notes.html#id130266">Erts 5.7.5.1</a></li>
+<li title="Erts 5.7.5"><a href="notes.html#id130336">Erts 5.7.5</a></li>
+<li title="Erts 5.7.4"><a href="notes.html#id98798">Erts 5.7.4</a></li>
+<li title="Erts 5.7.3"><a href="notes.html#id99304">Erts 5.7.3</a></li>
+<li title="Erts 5.7.2"><a href="notes.html#id99902">Erts 5.7.2</a></li>
+<li title="Erts 5.7.1"><a href="notes.html#id100257">Erts 5.7.1</a></li>
+<li title="Erts 5.7"><a href="notes.html#id100522">Erts 5.7</a></li>
+<li title="Erts 5.6.5.1"><a href="notes.html#id101433">Erts 5.6.5.1</a></li>
+<li title="Erts 5.6.5"><a href="notes.html#id101544">Erts 5.6.5</a></li>
+<li title="Erts 5.6.4.2"><a href="notes.html#id101914">Erts 5.6.4.2</a></li>
+<li title="Erts 5.6.4.1"><a href="notes.html#id102003">Erts 5.6.4.1</a></li>
+<li title="Erts 5.6.4"><a href="notes.html#id102065">Erts 5.6.4</a></li>
+<li title="Erts 5.6.3.3"><a href="notes.html#id102462">Erts 5.6.3.3</a></li>
+<li title="Erts 5.6.3.2"><a href="notes.html#id102573">Erts 5.6.3.2</a></li>
+<li title="Erts 5.6.3.1"><a href="notes.html#id102607">Erts 5.6.3.1</a></li>
+<li title="Erts 5.6.3"><a href="notes.html#id102638">Erts 5.6.3</a></li>
+<li title="Erts 5.6.2"><a href="notes.html#id103050">Erts 5.6.2</a></li>
+<li title="Erts 5.6.1.1"><a href="notes.html#id103306">Erts 5.6.1.1</a></li>
+<li title="Erts 5.6.1"><a href="notes.html#id103401">Erts 5.6.1</a></li>
+<li title="Erts 5.6"><a href="notes.html#id103856">Erts 5.6</a></li>
+<li title="Erts 5.5.5.5"><a href="notes.html#id104822">Erts 5.5.5.5</a></li>
+<li title="Erts 5.5.5.4"><a href="notes.html#id104854">Erts 5.5.5.4</a></li>
+<li title="Erts 5.5.5.3"><a href="notes.html#id104901">Erts 5.5.5.3</a></li>
+<li title="Erts 5.5.5.2"><a href="notes.html#id104971">Erts 5.5.5.2</a></li>
+<li title="Erts 5.5.5.1"><a href="notes.html#id105003">Erts 5.5.5.1</a></li>
+<li title="Erts 5.5.5"><a href="notes.html#id105071">Erts 5.5.5</a></li>
+<li title="Erts 5.5.4.3"><a href="notes.html#id105396">Erts 5.5.4.3</a></li>
+<li title="Erts 5.5.4.2"><a href="notes.html#id105497">Erts 5.5.4.2</a></li>
+<li title="Erts 5.5.4.1"><a href="notes.html#id105577">Erts 5.5.4.1</a></li>
+<li title="Erts 5.5.4"><a href="notes.html#id105612">Erts 5.5.4</a></li>
+<li title="Erts 5.5.3.1"><a href="notes.html#id105927">Erts 5.5.3.1</a></li>
+<li title="Erts 5.5.3"><a href="notes.html#id106249">Erts 5.5.3</a></li>
+<li title="Erts 5.5.2.2"><a href="notes.html#id106711">Erts 5.5.2.2</a></li>
+<li title="Erts 5.5.2.1"><a href="notes.html#id106746">Erts 5.5.2.1</a></li>
+<li title="Erts 5.5.2"><a href="notes.html#id106800">Erts 5.5.2</a></li>
+<li title="Erts 5.5.1.1"><a href="notes.html#id107210">Erts 5.5.1.1</a></li>
+<li title="Erts 5.5.1"><a href="notes.html#id107244">Erts 5.5.1</a></li>
+<li title="ERTS 5.5"><a href="notes.html#id107605">ERTS 5.5</a></li>
+<li title="ERTS 5.4.13"><a href="notes.html#id108128">ERTS 5.4.13</a></li>
+<li title="ERTS 5.4.12"><a href="notes.html#id108346">ERTS 5.4.12</a></li>
+<li title="ERTS 5.4.11"><a href="notes.html#id108457">ERTS 5.4.11</a></li>
+<li title="ERTS 5.4.10"><a href="notes.html#id108609">ERTS 5.4.10</a></li>
+<li title="ERTS 5.4.9.2"><a href="notes.html#id108807">ERTS 5.4.9.2</a></li>
+<li title="ERTS 5.4.9.1"><a href="notes.html#id108851">ERTS 5.4.9.1</a></li>
+<li title="ERTS 5.4.9"><a href="notes.html#id108888">ERTS 5.4.9</a></li>
+<li title="ERTS 5.4.8"><a href="notes.html#id109055">ERTS 5.4.8</a></li>
+<li title="ERTS 5.4.7"><a href="notes.html#id109254">ERTS 5.4.7</a></li>
+<li title="ERTS 5.4.6"><a href="notes.html#id109343">ERTS 5.4.6</a></li>
+<li title="ERTS 5.4.5"><a href="notes.html#id109502">ERTS 5.4.5</a></li>
+<li title="ERTS 5.4.4"><a href="notes.html#id109660">ERTS 5.4.4</a></li>
+<li title="ERTS 5.4.3"><a href="notes.html#id109882">ERTS 5.4.3</a></li>
+<li title="ERTS 5.4.2.1"><a href="notes.html#id110008">ERTS 5.4.2.1</a></li>
+<li title="ERTS 5.4.2"><a href="notes.html#id110045">ERTS 5.4.2</a></li>
+<li title="ERTS 5.4.1"><a href="notes.html#id110108">ERTS 5.4.1</a></li>
+</ul>
+</li></ul>
+</div></div>
+<div id="content">
+<div class="innertube">
+<div class="frontpage"></div>
+<center><h1>Erlang Run-Time System Application (ERTS) Release Notes</h1></center>
+<center><h4>Version 5.9</h4></center>
+<center><h4>December 14 2011</h4></center>
+</div>
+<div class="footer">
+<hr>
+<p>Copyright © 1997-2011 Ericsson AB. All Rights Reserved.</p>
+</div>
+</div>
+</div></body>
+</html>
