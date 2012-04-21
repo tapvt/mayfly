@@ -27,7 +27,7 @@ start(_Type, _Args) ->
             {keyfile, "priv/ssl/key.pem"}, {password, "abc123"}],
         cowboy_http_protocol, [{dispatch, Dispatch}]
     ),
-    sendfile:start_link(),    
+    sendfile:start_link(),
     cheea_sup:start_link().
 
 stop(_State) ->
