@@ -14,7 +14,7 @@ start() ->
 start(_Type, _Args) ->
     Dispatch = [
         {'_', [
-            {'_', default_handler, []}
+            {'_', websocket_handler, []}
         ]}
     ],
     cowboy:start_listener(http, 100,
@@ -29,6 +29,7 @@ start(_Type, _Args) ->
     ),
     sendfile:start_link(),
     cheea_sup:start_link().
+
 
 stop(_State) ->
     sendfile:stop(),
