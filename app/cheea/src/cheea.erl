@@ -9,6 +9,7 @@ start() ->
     application:start(lhttpc),
     application:start(mimetypes),
     application:start(cowboy),
+    application:start(gproc),
     application:start(cheea).
 
 start(_Type, _Args) ->

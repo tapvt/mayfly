@@ -22,19 +22,24 @@ terminate(_Req, _State) ->
     ok.
 
 websocket_init(_Any, Req, []) ->
-    timer:send_interval(1000, tick),
+    %timer:send_interval(1000, tick),
+    gproc:reg({p, l, {?MODULE, "chat"}}),
+    io:format("~s~n", ["foo"]),
     Req2 = cowboy_http_req:compact(Req),
     {ok, Req2, undefined, hibernate}.
 
 websocket_handle({text, Msg}, Req, State) ->
-    {reply, {text, << "You said: ", Msg/binary >>}, Req, State, hibernate};
+    Key = {?MODULE, "chat"},
+    gproc:send({p, l, Key}, {self(), Key, Msg}),
+    {ok, Req, State};
 websocket_handle(_Any, Req, State) ->
     {ok, Req, State}.
 
-websocket_info(tick, Req, State) ->
-    {reply, {text, cheea_util:chat_uid()}, Req, State, hibernate};
+websocket_info({_Pid, {?MODULE, "chat"}, Msg}, Req, State) ->
+    {reply, {text, Msg}, Req, State, hibernate};
 websocket_info(_Info, Req, State) ->
     {ok, Req, State, hibernate}.
 
 websocket_terminate(_Reason, _Req, _State) ->
     ok.
+
