@@ -15,7 +15,7 @@ start() ->
 start(_Type, _Args) ->
     Dispatch = [
         {'_', [
-            {'_', websocket_handler, []}
+            {[chat, name], websocket_handler, []}
         ]}
     ],
     cowboy:start_listener(http, 100,
