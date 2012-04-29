@@ -38,5 +38,23 @@ websocket_terminate(_Reason, _Req, _State) -> ok.
 
 clean_msg(Msg) ->
     [Name, Msg2] = binary:split(Msg, [<<":">>]),
-    [Name, <<" - ">>, Msg2].
+    [Name, <<" - ">>, escape(Msg2)].
 
+escape(B) when is_binary(B) ->
+    escape(binary_to_list(B), []);
+escape(A) when is_atom(A) ->
+    escape(atom_to_list(A), []);
+escape(S) when is_list(S) ->
+    escape(S, []).
+
+
+escape([], Acc) ->
+    list_to_binary(lists:reverse(Acc));
+escape("<" ++ Rest, Acc) ->
+    escape(Rest, lists:reverse("&lt;", Acc));
+escape(">" ++ Rest, Acc) ->
+    escape(Rest, lists:reverse("&gt;", Acc));
+escape("&" ++ Rest, Acc) ->
+    escape(Rest, lists:reverse("&amp;", Acc));
+escape([C | Rest], Acc) ->
+    escape(Rest, [C | Acc]).
