@@ -9,13 +9,13 @@
 
 init({_Any, http}, Req, []) ->
     case cowboy_http_req:header('Upgrade', Req) of
-        {undefined, Req2}         -> {ok, Req2, undefined};
+        {undefined, Req2}        -> {ok, Req2, undefined};
         {<<"websocket">>, _Req2} -> {upgrade, protocol, cowboy_http_websocket};
         {<<"WebSocket">>, _Req2} -> {upgrade, protocol, cowboy_http_websocket}
     end.
 
 handle(Req, State) ->
-    {ok, Req2} = cowboy_http_req:reply(200, [{'Content-Type', <<"text/html">>}], "", Req),
+    {ok, Req2} = cowboy_http_req:reply(200, [{'Content-Type', <<"application/json">>}], "", Req),
     {ok, Req2, State}.
 
 terminate(_Req, _State) -> ok.
@@ -38,7 +38,8 @@ websocket_terminate(_Reason, _Req, _State) -> ok.
 
 clean_msg(Msg) ->
     [Name, Msg2] = binary:split(Msg, [<<":">>]),
-    [Name, <<" - ">>, escape(Msg2)].
+    [Name2, _]   = binary:split(Name, [<<"?">>]),
+    jiffy:encode({[{<<"name">>, Name2}, {<<"msg">>, Msg2}]}).
 
 escape(B) when is_binary(B) ->
     escape(binary_to_list(B), []);

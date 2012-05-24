@@ -10,6 +10,7 @@ start() ->
     application:start(mimetypes),
     application:start(cowboy),
     application:start(gproc),
+    application:start(jiffy),
     application:start(cheea).
 
 start(_Type, _Args) ->

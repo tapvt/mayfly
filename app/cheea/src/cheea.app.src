@@ -10,6 +10,7 @@
         public_key,
         ssl,
         cowboy,
+        jiffy,
         gproc
     ]},
     {mod, { cheea, []}},
