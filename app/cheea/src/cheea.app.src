@@ -9,7 +9,8 @@
         crypto,
         public_key,
         ssl,
-        cowboy
+        cowboy,
+        gproc
     ]},
     {mod, { cheea, []}},
     {env, []}
