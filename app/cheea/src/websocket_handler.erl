@@ -1,5 +1,3 @@
-%% Feel free to use, reuse and abuse the code in this file.
-
 -module(websocket_handler).
 -behaviour(cowboy_http_handler).
 -behaviour(cowboy_http_websocket_handler).
@@ -22,7 +20,11 @@ terminate(_Req, _State) -> ok.
 
 websocket_init(_Any, Req, []) ->
     {Chat, _Req2} = cowboy_http_req:binding(chat, Req),
-    gproc:reg({p, l, {?MODULE, Chat}}),
+    Key = {?MODULE, Chat},
+    gproc:reg({p, l, Key}),
+    gproc:send({p, l, Key}, {self(), Key, jiffy:encode(
+        {[{<<"name">>, 'MAYFLY'}, {<<"msg">>, 'someone joined'}]}
+        )}),
     {ok, Req, Chat, hibernate}.
 
 websocket_handle({text, Msg}, Req, State) ->
@@ -37,25 +39,15 @@ websocket_info(_Info, Req, State) -> {ok, Req, State, hibernate}.
 websocket_terminate(_Reason, _Req, _State) -> ok.
 
 clean_msg(Msg) ->
-    [Name, Msg2] = binary:split(Msg, [<<":">>]),
-    [Name2, _]   = binary:split(Name, [<<"?">>]),
-    jiffy:encode({[{<<"name">>, Name2}, {<<"msg">>, Msg2}]}).
+    {[{<<"name">>, Name2}, {<<"msg">>, Msg2}]} = jiffy:decode(Msg),
+    jiffy:encode({[{<<"name">>, Name2}, {<<"msg">>, escape(Msg2)}]}).
 
-escape(B) when is_binary(B) ->
-    escape(binary_to_list(B), []);
-escape(A) when is_atom(A) ->
-    escape(atom_to_list(A), []);
-escape(S) when is_list(S) ->
-    escape(S, []).
+escape(B) when is_binary(B) -> escape(binary_to_list(B), []);
+escape(A) when is_atom(A)   -> escape(atom_to_list(A), []);
+escape(S) when is_list(S)   -> escape(S, []).
 
-
-escape([], Acc) ->
-    list_to_binary(lists:reverse(Acc));
-escape("<" ++ Rest, Acc) ->
-    escape(Rest, lists:reverse("&lt;", Acc));
-escape(">" ++ Rest, Acc) ->
-    escape(Rest, lists:reverse("&gt;", Acc));
-escape("&" ++ Rest, Acc) ->
-    escape(Rest, lists:reverse("&amp;", Acc));
-escape([C | Rest], Acc) ->
-    escape(Rest, [C | Acc]).
+escape([], Acc)          -> list_to_binary(lists:reverse(Acc));
+escape("<" ++ Rest, Acc) -> escape(Rest, lists:reverse("&lt;", Acc));
+escape(">" ++ Rest, Acc) -> escape(Rest, lists:reverse("&gt;", Acc));
+escape("&" ++ Rest, Acc) -> escape(Rest, lists:reverse("&amp;", Acc));
+escape([C | Rest], Acc)  -> escape(Rest, [C | Acc]).
