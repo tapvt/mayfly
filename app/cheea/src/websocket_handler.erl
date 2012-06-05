@@ -22,9 +22,6 @@ websocket_init(_Any, Req, []) ->
     {Chat, _Req2} = cowboy_http_req:binding(chat, Req),
     Key = {?MODULE, Chat},
     gproc:reg({p, l, Key}),
-    gproc:send({p, l, Key}, {self(), Key, jiffy:encode(
-        {[{<<"name">>, 'MAYFLY'}, {<<"msg">>, 'someone joined'}]}
-        )}),
     {ok, Req, Chat, hibernate}.
 
 websocket_handle({text, Msg}, Req, State) ->
@@ -33,14 +30,25 @@ websocket_handle({text, Msg}, Req, State) ->
     {ok, Req, State};
 websocket_handle(_Any, Req, State) -> {ok, Req, State}.
 
-websocket_info({_Pid, {?MODULE, State}, Msg}, Req, State) -> {reply, {text, clean_msg(Msg)}, Req, State, hibernate};
+websocket_info({_Pid, {?MODULE, State}, Msg}, Req, State) -> 
+    {[{<<"act">>, Act}, {<<"name">>, Name}, {<<"msg">>, Msg2}]} = jiffy:decode(Msg),
+    case Act of
+        <<"join">> ->
+            Res = jiffy:encode({[
+                    {<<"name">>, <<"MAYFLY SERVER">>},
+                    {<<"msg">>, <<Name/binary, <<" has joined the chat.">>/binary>>}
+                    ]}),
+                    {reply, {text, escape(Res)}, Req, State, hibernate};
+        <<"msg">>  ->
+            Res = jiffy:encode({[
+                    {<<"name">>, Name},
+                    {<<"msg">>, escape(Msg2)}
+                    ]}),
+                    {reply, {text, escape(Res)}, Req, State, hibernate}
+   end;
 websocket_info(_Info, Req, State) -> {ok, Req, State, hibernate}.
 
 websocket_terminate(_Reason, _Req, _State) -> ok.
-
-clean_msg(Msg) ->
-    {[{<<"name">>, Name2}, {<<"msg">>, Msg2}]} = jiffy:decode(Msg),
-    jiffy:encode({[{<<"name">>, Name2}, {<<"msg">>, escape(Msg2)}]}).
 
 escape(B) when is_binary(B) -> escape(binary_to_list(B), []);
 escape(A) when is_atom(A)   -> escape(atom_to_list(A), []);
